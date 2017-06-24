@@ -52,7 +52,7 @@ def make_env():
                                  width=80, height=80, grayscale=True)
     return e
 
-NUM_WORKERS = 4
+NUM_WORKERS = 1
 T_MAX = 5
 VALID_ACTIONS = [0, 1, 2, 3]
 

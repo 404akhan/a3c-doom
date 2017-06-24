@@ -23,7 +23,6 @@ def make_copy_params_op(v1_list, v2_list):
 
 def make_train_op(local_estimator, global_estimator):
   local_grads, _ = zip(*local_estimator.grads_and_vars)
-  local_grads, _ = tf.clip_by_global_norm(local_grads, 5.0)
   _, global_vars = zip(*global_estimator.grads_and_vars)
   local_global_grads_and_vars = list(zip(local_grads, global_vars))
   return global_estimator.optimizer.apply_gradients(local_global_grads_and_vars,
@@ -92,6 +91,7 @@ class Worker(object):
           next_state = np.append(self.state[:,:,1:], np.expand_dims(next_state, 2), axis=2)
          
           self.total_reward += reward
+          self.episode_length += 1  
           self.action_counter.append(action)
 
           transitions.append(Transition(
